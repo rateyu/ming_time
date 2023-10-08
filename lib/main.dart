@@ -120,7 +120,17 @@ class _MyHomePageState extends State<MyHomePage> {
             Vibration.vibrate(duration: _vibrationDuration);
             NotificationHelper._instance.showNotification(
               title: 'Hello',
-              body: 'ming!',
+              body: 'ming1!',
+            );
+            Future.delayed(Duration(seconds: 1));
+            NotificationHelper._instance.showNotification(
+              title: 'Hello',
+              body: 'ming2!',
+            );
+            Future.delayed(Duration(seconds: 1));
+            NotificationHelper._instance.showNotification(
+              title: 'Hello',
+              body: 'ming3!',
             );
 
           }
