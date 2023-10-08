@@ -67,6 +67,39 @@ class NotificationHelper {
       body,
       platformChannelSpecifics,
     );
+
+    /*int notificationCount = 0;
+
+    void scheduleNotifications() {
+      Timer.periodic(Duration(seconds: 3), (Timer timer) {
+        if (notificationCount >= 3) {
+          timer.cancel();
+        } else {
+          // 发起一个通知
+          _notificationsPlugin.show(
+            1,
+            title,
+            body,
+            platformChannelSpecifics,
+          );
+          notificationCount++;
+        }
+      });
+    }*/
+
+    /*for (int i = 0; i < 3; i++) {
+      await _notificationsPlugin.show(
+        i, // 使用循环变量作为通知ID以确保每次通知都是唯一的
+        title,
+        body,
+        platformChannelSpecifics,
+      );
+
+      if (i < 2) {
+        // 如果不是最后一次发送，等待1秒再发送下一条
+        await Future.delayed(Duration(seconds: 2));
+      }
+    }*/
   }
 }
 
@@ -103,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late Timer _timer;
   bool _isVibrating = false;
   bool _autoVibrateAtHour = true;
+  bool _myState = true;
   int _vibrationDuration = 5000; // 默认5秒
   TextEditingController _durationController = TextEditingController(text: "5000");
 
@@ -115,24 +149,19 @@ class _MyHomePageState extends State<MyHomePage> {
     _timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
       setState(() {
         final now = DateTime.now();
-        if (_autoVibrateAtHour && (now.minute == 0 || now.minute == 30 || now.minute == 15|| now.minute == 45) && now.second == 0 && now.millisecond < 100) {
-          if (Vibration.hasVibrator() != null) {
-            Vibration.vibrate(duration: _vibrationDuration);
-            NotificationHelper._instance.showNotification(
-              title: 'Hello',
-              body: 'ming1!',
-            );
-            Future.delayed(Duration(seconds: 1));
-            NotificationHelper._instance.showNotification(
-              title: 'Hello',
-              body: 'ming2!',
-            );
-            Future.delayed(Duration(seconds: 1));
-            NotificationHelper._instance.showNotification(
-              title: 'Hello',
-              body: 'ming3!',
-            );
-
+        if (_autoVibrateAtHour && (now.minute % 15 == 0)) {
+          if(now.second == 0 && _myState) {
+            _myState = false;
+            if (Vibration.hasVibrator() != null) {
+              Vibration.vibrate(duration: _vibrationDuration);
+              NotificationHelper._instance.showNotification(
+                title: 'Hello',
+                body: 'ming1!',
+              );
+            }
+          }
+          else if(now.second == 1 && _myState == false) {
+            _myState = true;
           }
         }
       });
