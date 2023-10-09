@@ -146,26 +146,59 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Wakelock.enable();
 
+    // _timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
+    //   setState(() {
+    //     final now = DateTime.now();
+    //     if (_autoVibrateAtHour && (now.minute % 15 == 0) && now.second == 0 && now.millisecond < 100) {
+    //       if (Vibration.hasVibrator() != null) {
+    //         Vibration.vibrate(duration: _vibrationDuration);
+    //         NotificationHelper._instance.showNotification(
+    //           title: 'Hello',
+    //           body: 'ming!',
+    //         );
+    //
+    //       }
+    //     }
+    //   });
+    // });
+
+    bool _hasTriggered = false;
+
     _timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
       setState(() {
         final now = DateTime.now();
+<<<<<<< HEAD
         if (_autoVibrateAtHour && (now.minute % 15 == 0)) {
           if(now.second == 0 && _myState) {
             _myState = false;
+=======
+        if (_autoVibrateAtHour && (now.minute % 15 == 0) && now.second == 0) {
+          if (!_hasTriggered) {
+>>>>>>> 4586b32 (恢复一次提醒，优化milliseconds条件在0秒内，增加震动时间段，使用ndk参数编译)
             if (Vibration.hasVibrator() != null) {
               Vibration.vibrate(duration: _vibrationDuration);
               NotificationHelper._instance.showNotification(
                 title: 'Hello',
+<<<<<<< HEAD
                 body: 'ming1!',
               );
             }
           }
           else if(now.second == 1 && _myState == false) {
             _myState = true;
+=======
+                body: 'ming!',
+              );
+              _hasTriggered = true;
+            }
+>>>>>>> 4586b32 (恢复一次提醒，优化milliseconds条件在0秒内，增加震动时间段，使用ndk参数编译)
           }
+        } else {
+          _hasTriggered = false;
         }
       });
     });
+
   }
 
   @override

@@ -45,16 +45,12 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-//        解决cpu不兼容问题
-//        ndk {
-//            abiFilters "armeabi-v7a"
-//              abiFilters "arm64-v8a"
-//        }
-//        此处代码可编译给华为手机使用，调试时需要注释掉
-//        ndk {
-//            abiFilters "armeabi-v7a"
-//            abiFilters "arm64-v8a"
-//        }
+
+        //此处代码可编译给华为手机使用，调试时需要注释掉
+        ndk {
+            abiFilters "armeabi-v7a"
+            abiFilters "arm64-v8a"
+        }
     }
 
     buildTypes {
