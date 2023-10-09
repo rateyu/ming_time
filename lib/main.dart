@@ -67,39 +67,6 @@ class NotificationHelper {
       body,
       platformChannelSpecifics,
     );
-
-    /*int notificationCount = 0;
-
-    void scheduleNotifications() {
-      Timer.periodic(Duration(seconds: 3), (Timer timer) {
-        if (notificationCount >= 3) {
-          timer.cancel();
-        } else {
-          // 发起一个通知
-          _notificationsPlugin.show(
-            1,
-            title,
-            body,
-            platformChannelSpecifics,
-          );
-          notificationCount++;
-        }
-      });
-    }*/
-
-    /*for (int i = 0; i < 3; i++) {
-      await _notificationsPlugin.show(
-        i, // 使用循环变量作为通知ID以确保每次通知都是唯一的
-        title,
-        body,
-        platformChannelSpecifics,
-      );
-
-      if (i < 2) {
-        // 如果不是最后一次发送，等待1秒再发送下一条
-        await Future.delayed(Duration(seconds: 2));
-      }
-    }*/
   }
 }
 
@@ -136,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late Timer _timer;
   bool _isVibrating = false;
   bool _autoVibrateAtHour = true;
-  bool _myState = true;
   int _vibrationDuration = 5000; // 默认5秒
   TextEditingController _durationController = TextEditingController(text: "5000");
 
@@ -167,31 +133,16 @@ class _MyHomePageState extends State<MyHomePage> {
     _timer = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
       setState(() {
         final now = DateTime.now();
-<<<<<<< HEAD
-        if (_autoVibrateAtHour && (now.minute % 15 == 0)) {
-          if(now.second == 0 && _myState) {
-            _myState = false;
-=======
         if (_autoVibrateAtHour && (now.minute % 15 == 0) && now.second == 0) {
           if (!_hasTriggered) {
->>>>>>> 4586b32 (恢复一次提醒，优化milliseconds条件在0秒内，增加震动时间段，使用ndk参数编译)
             if (Vibration.hasVibrator() != null) {
               Vibration.vibrate(duration: _vibrationDuration);
               NotificationHelper._instance.showNotification(
                 title: 'Hello',
-<<<<<<< HEAD
-                body: 'ming1!',
-              );
-            }
-          }
-          else if(now.second == 1 && _myState == false) {
-            _myState = true;
-=======
                 body: 'ming!',
               );
               _hasTriggered = true;
             }
->>>>>>> 4586b32 (恢复一次提醒，优化milliseconds条件在0秒内，增加震动时间段，使用ndk参数编译)
           }
         } else {
           _hasTriggered = false;
